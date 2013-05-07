@@ -6,24 +6,49 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="http://twitter.github.io/bootstrap/assets/css/docs.css" rel="stylesheet">
-    <link href="http://twitter.github.io/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
+    <!--[if lt IE 9]> HTML5Shiv
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
         <title>Slim Task Project</title>
     </head>
     <body>
-    	
+        <!-- start navigation-->
+    	<div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="#">Slim Task Project</a>
+            <ul class="nav">
+              <li><a href="/index.php">Home</a></li>
+              <li><a href="#">Task List</a></li>
+              <li><a href="#">Report</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- end navigation-->
+        
+
+        <!-- start container-->
     	<div class="container">
-    		<div class="row">
     			{% block content %}{% endblock %}		
-    		</div>
     	</div>
-    	
+    
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script>
+    /*menu handler*/
+     $(document).ready(function () {
+        var url = window.location;
+    // Will only work if string in href matches with location
+        $('ul.nav a[href="' + url + '"]').parent().addClass('active');
+
+    // Will also work for relative and absolute hrefs
+        $('ul.nav a').filter(function () {
+            return this.href == url;
+        }).parent().addClass('active').parent().parent().addClass('active');
+    });
+    </script>
     </body>
 </html>

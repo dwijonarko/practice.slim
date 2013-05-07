@@ -1,5 +1,6 @@
 {% extends "layout.html" %} 
 {% block content %}
+<div class="row home">
     <h2># Tasks</h2>
     <table class="table table-condensed  table-striped">
     	<tr><th>id</th><th>name</th><th>Done</th><th>Edit</th><th>Delete</th></tr>
@@ -13,7 +14,8 @@
     	</tr>
 	{% endfor %}
 	</table>
-    <form action="<?php echo Slim::getInstance()->urlFor('task_new'); ?>" method="post">
-        <input type="submit" value="Add Task" />
+    <form action="{{urlFor('task_new') }}">
+        <input type="submit" value="Add Task" class="btn btn-primary"/>
     </form>
+</div>
 {% endblock %}
