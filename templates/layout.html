@@ -8,6 +8,8 @@
     <!-- Le styles -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-modal.css" rel="stylesheet">
+    
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]> HTML5Shiv
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -35,8 +37,10 @@
     	</div>
     
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-modalmanager.js"></script>
     <script>
     /*menu handler*/
      $(document).ready(function () {
@@ -48,6 +52,61 @@
         $('ul.nav a').filter(function () {
             return this.href == url;
         }).parent().addClass('active').parent().parent().addClass('active');
+
+        var $modal = $('#ajax-modal');
+ 
+        $('#btn_new').on('click', function(){
+            // create the backdrop and wait for next modal to be triggered
+            $('body').modalmanager('loading');
+             
+            setTimeout(function(){
+                 url = encodeURI(window.location+"new");
+                $modal.load(url, '', function(){
+                    $modal.modal();
+                });
+            }, 1000);
+        });
+
+        
+        $('body').delegate("a.link-edit","click",function(){
+            url = encodeURI(window.location+$(this).attr("id")+"/edit/");
+            $('body').modalmanager('loading');
+            setTimeout(function(){
+               $modal.load(url, '', function(){
+                     $modal.modal();
+                 });
+             }, 1000);
+           return false;
+           
+        });
+
+         $('body').delegate("a.link-delete","click",function(){
+           var href = $(this).attr('href');
+           var id = $(this).attr('id');
+            if (!$('#dataConfirmModal').length) {
+                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+            } 
+        $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+        $('#dataConfirmModal').modal({show:true});
+
+        $('#dataConfirmOK').click(function(){
+            $.ajax({
+            type: 'GET',
+            url: href,
+                success: function(data) {
+                    trId = "tr#"+id;
+                    $('table '+trId).hide('slow');
+                    $('#dataConfirmModal').modal('hide');    
+                }
+            })
+            
+        });
+        
+        
+        
+        return false;
+        });
+             
     });
     </script>
     </body>

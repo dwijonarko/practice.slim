@@ -3,9 +3,12 @@ require 'vendor/autoload.php'; //autoload
 
 /*autoload twig*/
 require "vendor/twig/twig/lib/Twig/Autoloader.php";
-Twig_Autoloader::register();
+Twig_Autoloader::register(array(
+    'debug' => true));
+
 \Slim\Extras\Views\Twig::$twigExtensions = array(
         'Twig_Extensions_Slim',
+        'Twig_Extension_Debug'
  );
 
 /*initialization activerecord*/
@@ -42,7 +45,8 @@ $app->post('/create', function () use ($app) {
     $task->done = $app->request()->post('done') === '1' ? 1 : 0;
     $task->save();
     if($task->save()) {
-        $app->redirect($app->urlFor('tasks'));
+        $data['task'] =$task;
+        $app->render('task/response.php', $data);
     }
 })->name('task_create');
 
@@ -59,7 +63,8 @@ $app->post('/:id/edit', function ($id) use ($app) {
     $task->done = $app->request()->post('done') === '1' ? 1 : 0;
     $task->save();
     if($task->id > 0) {
-        $app->redirect($app->urlFor('tasks'));
+        $data['task'] =$task;
+        $app->render('task/response.php', $data);
     }
 })->name('task_edit_post');
 
@@ -67,7 +72,7 @@ $app->post('/:id/edit', function ($id) use ($app) {
 $app->get('/:id/delete/', function ($id) use ($app) {
     $task = Task::find($id);
     $task->delete();
-    $app->redirect($app->urlFor('tasks'));
+    //$app->redirect($app->urlFor('tasks'));
 })->name('task_delete');
 
 $app->run();
