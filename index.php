@@ -1,17 +1,27 @@
 <?php
 require 'vendor/autoload.php'; //autoload
+/*initialize slim app*/
+$app = new \Slim\Slim();
 
-/*autoload twig*/
-require "vendor/twig/twig/lib/Twig/Autoloader.php";
-Twig_Autoloader::register(array(
-    'debug' => true));
+/*initialize twig*/
+$twig_view = new \Slim\Extras\Views\Twig();
 
-\Slim\Extras\Views\Twig::$twigExtensions = array(
+/*initialize twig options*/
+$twig_view::$twigOptions = array(
+    'charset'           => 'utf-8',
+    'cache'             => 'templates/cache',
+    'auto_reload'       => true,
+    'strict_variables'  => false,
+    'autoescape'        => false
+    );
+
+/*initialize twig extension*/
+$twig_view::$twigExtensions = array(
         'Twig_Extensions_Slim',
         'Twig_Extension_Debug'
  );
 
-/*initialization activerecord*/
+/*initialize activerecord*/
 ActiveRecord\Config::initialize(function($cfg) {
         $cfg->set_model_directory('models');
         $cfg->set_connections(array(
@@ -19,17 +29,15 @@ ActiveRecord\Config::initialize(function($cfg) {
         ));
 });
 
-/*initialize slim app*/
-$app = new \Slim\Slim(array(
-    "view" => new \Slim\Extras\Views\Twig()
-));
+/*set the view on slim framework to twig extension*/
+$app->view($twig_view);
 
 
 ## Read
 $app->get('/', function () use ($app) { 
    $data['tasks'] = Task::find('all');
    $app->view()->setData(array());
-   $app->render('task/index.php', $data); 
+   $app->render('task/index.php', $data);   
 
 })->name('tasks'); 
 
