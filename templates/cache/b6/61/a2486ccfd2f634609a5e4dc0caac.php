@@ -39,10 +39,10 @@ class __TwigTemplate_b661a2486ccfd2f634609a5e4dc0caac extends Twig_Template
         <!-- start navigation-->
     \t<div class=\"navbar\">
           <div class=\"navbar-inner\">
-            <a class=\"brand\" href=\"#\">Slim Task Project</a>
+            <a class=\"brand\" href=\"#\">Brand</a>
             <ul class=\"nav\">
               <li><a href=\"/index.php\">Home</a></li>
-              <li><a href=\"#\">Task List</a></li>
+              <li><a href=\"#\">List</a></li>
               <li><a href=\"#\">Report</a></li>
             </ul>
           </div>
@@ -146,6 +146,6 @@ class __TwigTemplate_b661a2486ccfd2f634609a5e4dc0caac extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (  20 => 1,  86 => 21,  82 => 19,  71 => 16,  65 => 15,  57 => 36,  53 => 13,  49 => 12,  44 => 11,  40 => 10,  31 => 3,  28 => 2,);
+        return array (  57 => 36,  20 => 1,);
     }
 }

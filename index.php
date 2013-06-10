@@ -83,4 +83,9 @@ $app->get('/:id/delete/', function ($id) use ($app) {
     //$app->redirect($app->urlFor('tasks'));
 })->name('task_delete');
 
+## Form
+$app->get('/pelatihan',function() use ($app){
+    $app->render('pelatihan/form.tpl');
+})->name('pelatihan');
+
 $app->run();
